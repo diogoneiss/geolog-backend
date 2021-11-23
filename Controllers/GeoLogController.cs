@@ -1,19 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using GeoLogBackend.Dominio.Infraestrutura;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Web.Resource;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeoLogBackend.Controllers
 {
-    [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("v1/GeoLog/Paises")]
     public class GeoLogController : ControllerBase
     {
-       
+        private IIbgeProvider _ibgeProvider;
+
+        public GeoLogController(IIbgeProvider ibgeProvider)
+        {
+            _ibgeProvider = ibgeProvider;
+        }
+
+       [HttpGet("{paises}")]
+       public async Task<ActionResult<string>> ObterPaisesIBGE([FromRoute]string paises)
+        {
+            var resultado = await _ibgeProvider.ObterPaisesIBGE(paises);
+
+            return Ok(resultado);
+        }
     }
 }
