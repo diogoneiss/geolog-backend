@@ -1,5 +1,7 @@
-﻿using GeoLogBackend.Dominio.Interfaces;
+﻿using GeoLogBackend.Dominio;
+using GeoLogBackend.Dominio.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace GeoLogBackend.Infraestrutura.Http
     {
         private const string url = "https://servicodados.ibge.gov.br/api/v1/paises/";
 
-        public async Task<string> ObterPaisesIBGE(string paises)
+        public async Task<List<Pais>> ObterPaisesIBGE(string paises)
         {
             HttpClient cliente = new();
             cliente.BaseAddress = new Uri(url);
@@ -20,7 +22,7 @@ namespace GeoLogBackend.Infraestrutura.Http
             HttpResponseMessage response = await cliente.GetAsync(paises);
             if (response.IsSuccessStatusCode)
             {
-                var paisesDto = await response.Content.ReadAsStringAsync();
+                var paisesDto = await response.Content.ReadAsAsync<List<Pais>>();
 
                 cliente.Dispose();
                 return paisesDto;
