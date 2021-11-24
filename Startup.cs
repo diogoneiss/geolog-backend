@@ -1,4 +1,4 @@
-using GeoLogBackend.Dominio.Infraestrutura;
+using GeoLogBackend.Dominio.Interfaces;
 using GeoLogBackend.Infraestrutura.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

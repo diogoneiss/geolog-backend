@@ -1,6 +1,9 @@
-﻿namespace GeoLogBackend.Dominio
+﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
+
+
+namespace GeoLogBackend.Dominio
 {
-    public class Lingua : Entidade
+    public class Lingua : Entidade, IAggregateRoot
     {
     }
 }

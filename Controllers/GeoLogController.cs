@@ -1,4 +1,4 @@
-﻿using GeoLogBackend.Dominio.Infraestrutura;
+﻿using GeoLogBackend.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
