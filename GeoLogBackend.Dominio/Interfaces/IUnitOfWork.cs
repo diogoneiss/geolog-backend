@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GeoLogBackend.GeoLogBackend.Dominio.Interfaces
 {
-    interface IUnitOfWork
+   public interface IUnitOfWork
     {
         IPaisRepository Paises { get;  }
     }

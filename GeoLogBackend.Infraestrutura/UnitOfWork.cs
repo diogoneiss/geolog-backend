@@ -24,10 +24,13 @@ namespace GeoLogBackend.GeoLogBackend.Infraestrutura
 
         public UnitOfWork(IConfiguration configuration)
         {
+            //TODO: Configurar cliente remoto para salvar dados
+           /*
             IMongoClient client = new MongoClient(configuration["MongoSettings:ConnectionString"]);
 
             _database = client.GetDatabase(configuration["MongoSettings:DatabaseName"]);
-        }
+        */
+            }
 
     }
 }
