@@ -6,6 +6,6 @@ namespace GeoLogBackend.Dominio
 {
     public class Governo : Entidade, IAggregateRoot
     {
-        public string Capital { get; set; }
+        public Capital Capital { get; set; }
     }
 }
