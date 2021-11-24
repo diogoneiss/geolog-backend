@@ -1,8 +1,23 @@
-﻿namespace GeoLogBackend.Dominio
+﻿using System;
+using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace GeoLogBackend.Dominio
 {
-    public class Entidade
+    public abstract class Entidade
     {
-        public ID Id { get; set; }
-        public Nome Nome { get; set; }
+
+        
+        [BsonRepresentation(BsonType.String)] public Guid Id { get; private set; }
+
+        public DateTime CreatedAt { get; private set; }
+
+        protected Entidade()
+        {
+            Id = Guid.NewGuid();
+            CreatedAt = DateTime.UtcNow;
+        }
     }
+
 }

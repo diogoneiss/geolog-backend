@@ -1,6 +1,11 @@
-﻿namespace GeoLogBackend.Dominio
+﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
+
+
+
+
+namespace GeoLogBackend.Dominio
 {
-    public class SubRegiao : Regiao
+    public class SubRegiao : Regiao, IAggregateRoot
     {
     }
 }

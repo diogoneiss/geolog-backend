@@ -1,6 +1,8 @@
-﻿namespace GeoLogBackend.Dominio
+﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
+
+namespace GeoLogBackend.Dominio
 {
-    public class Area
+    public class Area : Entidade, IAggregateRoot
     {
         public string Total { get; set; }
         public Unidade Unidade { get; set; }

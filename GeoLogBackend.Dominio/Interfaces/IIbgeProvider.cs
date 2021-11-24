@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace GeoLogBackend.Dominio.Infraestrutura
+namespace GeoLogBackend.Dominio.Interfaces
 {
     public interface IIbgeProvider
     {
