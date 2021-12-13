@@ -4,7 +4,9 @@
 
 namespace GeoLogBackend.Dominio
 {
-    public class RegiaoIntermediaria : Entidade, IAggregateRoot
+    public class RegiaoIntermediaria : Entidade, IAggregateRoot 
     {
+        public new ID Id { get; set; }
+        public string Nome { get; set; }
     }
 }

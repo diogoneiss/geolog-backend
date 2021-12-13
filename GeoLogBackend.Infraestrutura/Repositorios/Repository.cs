@@ -1,18 +1,16 @@
 ﻿using GeoLogBackend.Dominio;
 using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
-using GeoLogBackend.GeoLogBackend.Infraestrutura;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace GeoLogBackend.GeoLogBackend.Infraestrutura.Repositorios
 {
 
-        public abstract class Repository<T> : IRepository<T> where T : Entidade, IAggregateRoot
+    public abstract class Repository<T> : IRepository<T> where T : Entidade, IAggregateRoot
         {
         public readonly IMongoCollection<T> Collection;
 

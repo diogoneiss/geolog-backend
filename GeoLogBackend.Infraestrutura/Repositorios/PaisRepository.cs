@@ -2,10 +2,6 @@
 using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GeoLogBackend.GeoLogBackend.Infraestrutura.Repositorios
 {

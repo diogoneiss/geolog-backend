@@ -1,8 +1,4 @@
-﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
-
-
-
-namespace GeoLogBackend.Dominio
+﻿namespace GeoLogBackend.Dominio
 {
     public record ID 
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace GeoLogBackend.Dominio
 {

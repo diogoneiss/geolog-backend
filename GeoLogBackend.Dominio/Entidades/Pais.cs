@@ -1,5 +1,4 @@
 ﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
-using System;
 
 namespace GeoLogBackend.Dominio
 {
