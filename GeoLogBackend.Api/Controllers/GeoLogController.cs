@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace GeoLogBackend.Controllers
+namespace GeoLogBackend.Api.Controllers
 {
     [ApiController]
     [Route("v1/GeoLog/Paises")]
