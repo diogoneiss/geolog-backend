@@ -1,23 +1,18 @@
 using FluentValidation.AspNetCore;
-using GeoLogBackend.Dominio.Interfaces;
 using GeoLogBackend.GeoLogBackend.Api.Configurations;
-using GeoLogBackend.Infraestrutura.Http;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
-using Microsoft.OpenApi.Models;
 using System;
-using System.Reflection;
-using AutoMapper;
 using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 using System.Linq;
+using System.Reflection;
+using System.Text.Json;
 
 namespace GeoLogBackend.Api
 {
@@ -44,17 +39,24 @@ namespace GeoLogBackend.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            JsonSerializerOptions jsonSerializerOptions = null;
+
             services.ConfigureMongoDb();
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(opts =>
+                {
+                    opts.JsonSerializerOptions.IgnoreNullValues = true;
+                });
 
             //utilizado para adicionar validações do fluent atraves dos
             //assemblies que herdam da classe dele
             services.AddFluentValidation(fv => fv
                 .RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
             );
+
 
             services.ConfigureSwagger();
 

@@ -1,10 +1,11 @@
 ﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
+using Newtonsoft.Json;
 
 namespace GeoLogBackend.Dominio
 {
     public class Pais : Entidade, IAggregateRoot
     {
-        public Pais(ID id, Nome nome, Area area, Localizacao localizacao, Lingua[] linguas, Governo governo, UnidadeMonetaria[] moedas, string historico)
+        public Pais(ID id, Nome nome, Area area, Localizacao localizacao, Lingua[] linguas, Governo governo, UnidadeMonetaria[] unidadesMonetarias, string historico)
         {
             IdSequencial = id;
             Nome = nome;
@@ -12,7 +13,7 @@ namespace GeoLogBackend.Dominio
             Localizacao = localizacao;
             Linguas = linguas;
             Governo = governo;
-            Moedas = moedas;
+            UnidadesMonetarias = unidadesMonetarias;
             Historico = historico;
         }
 
@@ -22,7 +23,8 @@ namespace GeoLogBackend.Dominio
         public Localizacao Localizacao { get; set; }
         public Lingua[] Linguas { get; set; }
         public Governo Governo { get; set; }
-        public UnidadeMonetaria[] Moedas { get; set; }
+        [JsonProperty("unidades-monetarias")]
+        public UnidadeMonetaria[] UnidadesMonetarias { get; set; }
         public string Historico { get; set; }
     }
 }
