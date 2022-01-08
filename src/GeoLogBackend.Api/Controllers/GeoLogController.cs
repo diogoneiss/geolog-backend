@@ -1,5 +1,7 @@
 ﻿using GeoLogBackend.Dominio;
 using GeoLogBackend.Dominio.Interfaces;
+using GeoLogBackend.GeoLogBackend.Dominio.Entidades;
+using GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos;
 using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,17 +33,41 @@ namespace GeoLogBackend.Api.Controllers
             _paisRepository = uow.Paises;
         }
 
-       [HttpGet("{paises}")]
-       public async Task<ActionResult<string>> ObterPaisesIBGE([FromRoute]string paises)
+        /// <summary>
+        /// Recupera um pais dentro da lista do IBGE
+        /// </summary>
+        /// <param name="pais"></param>
+        /// <returns>Pais recuperado</returns>
+       [HttpGet("{pais}")]
+       public async Task<ActionResult<PaisResponseDto>> ObterPaisesIBGE([FromRoute] string pais)
         {
-            var resultado = await _ibgeProvider.ObterPaisesIBGE(paises);
+
+
+            var paisValidado = new PaisGetDto(pais, ModelState);
+
+            var resultado = await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             Pais primeiro = resultado[new Random().Next(resultado.Count)];
 
             await _paisRepository.Add(primeiro);
 
+            PaisResponseDto retorno = new PaisResponseDto(primeiro);
 
-            return Ok(primeiro);
+            return Ok(retorno);
         }
+
+        /* TODO: Fazer retornar todos
+         * revalidar todos no banco mongo (puxar todos da api e, se certo, limpar os do banco e adicionar dnv)
+         * Adicinar dados custom novos de pais
+         * Remover dados custom novos de pais
+         * Atualizar dados custom de pais
+         * Retornr dados custom de pais
+         * Cadastro de novo usario
+         */
     }
 }

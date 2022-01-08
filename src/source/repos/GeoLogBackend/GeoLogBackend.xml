@@ -4,5 +4,12 @@
         <name>GeoLogBackend</name>
     </assembly>
     <members>
+        <member name="M:GeoLogBackend.Api.Controllers.GeoLogController.ObterPaisesIBGE(System.String)">
+            <summary>
+            Recupera um pais dentro da lista do IBGE
+            </summary>
+            <param name="pais"></param>
+            <returns>Pais recuperado</returns>
+        </member>
     </members>
 </doc>
