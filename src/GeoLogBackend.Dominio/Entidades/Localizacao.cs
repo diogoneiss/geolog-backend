@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GeoLogBackend.Dominio
 {
-    public class Localizacao : Entidade, IAggregateRoot
+    public class Localizacao :  IAggregateRoot
     {
         public Regiao Regiao { get; set; }
         [JsonProperty("sub-regiao")]

@@ -11,7 +11,7 @@ namespace GeoLogBackend.GeoLogBackend.Dominio
     {
 
 
-        private readonly IPaisRepository _paisRepository;
+        public readonly IPaisRepository _paisRepository;
         //private readonly IUnitOfWork _uow;
 
         public PaisService(IUnitOfWork uow)

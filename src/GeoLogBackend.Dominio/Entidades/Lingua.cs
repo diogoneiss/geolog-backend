@@ -3,7 +3,7 @@
 
 namespace GeoLogBackend.Dominio
 {
-    public class Lingua : Entidade, IAggregateRoot
+    public class Lingua :  IAggregateRoot
     {
         public string Nome { get; set; }
     }

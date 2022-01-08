@@ -7,8 +7,9 @@ namespace GeoLogBackend.Dominio
     public abstract class Entidade
     {
 
-        
-        [BsonRepresentation(BsonType.String)] public Guid Id { get; private set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.String)] 
+        public Guid Id { get; private set; }
 
         public DateTime CreatedAt { get; private set; }
 

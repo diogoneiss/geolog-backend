@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace GeoLogBackend.Dominio
 {
-    public class Unidade : Entidade, IAggregateRoot
+    public class Unidade :  IAggregateRoot
     {
         public string Nome { get; set; }
         [JsonProperty("simbolo")]

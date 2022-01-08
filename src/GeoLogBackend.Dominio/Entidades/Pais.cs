@@ -1,4 +1,6 @@
 ﻿using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
 namespace GeoLogBackend.Dominio
@@ -16,6 +18,8 @@ namespace GeoLogBackend.Dominio
             UnidadesMonetarias = unidadesMonetarias;
             Historico = historico;
         }
+
+        //nao preciso do id pq ja herdo de entidade
 
         public ID IdSequencial { get; set; }
         public Nome Nome { get; set; }
