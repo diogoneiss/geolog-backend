@@ -4,7 +4,7 @@
 
 namespace GeoLogBackend.Dominio
 {
-    public class Capital : Entidade, IAggregateRoot
+    public class Capital : IAggregateRoot
     {
         public string Nome { get; set; }
     }

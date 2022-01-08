@@ -3,7 +3,7 @@
 
 namespace GeoLogBackend.Dominio
 {
-    public class UnidadeMonetaria : Entidade, IAggregateRoot
+    public class UnidadeMonetaria : IAggregateRoot
     {
         public string Nome { get; set; }
     }

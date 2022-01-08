@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace GeoLogBackend.GeoLogBackend.Infraestrutura
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
 
         private IPaisRepository _paisRepository;
@@ -20,13 +20,22 @@ namespace GeoLogBackend.GeoLogBackend.Infraestrutura
 
         public UnitOfWork(IConfiguration configuration)
         {
-            //TODO: Configurar cliente remoto para salvar dados
-           /*
-            IMongoClient client = new MongoClient(configuration["MongoSettings:ConnectionString"]);
+            //user: admin
+            //password: admin
+         const string username = "admin";
+         const string password = "admin";
 
-            _database = client.GetDatabase(configuration["MongoSettings:DatabaseName"]);
-        */
-            }
+         const string databaseName = "geolog";
+
+
+         string CONNECTION_STRING = $"mongodb+srv://{username}:{password}@cluster0.5t0zc.mongodb.net/{databaseName}?retryWrites=true&w=majority";
+
+        var settings = MongoClientSettings.FromConnectionString(CONNECTION_STRING);
+        var client = new MongoClient(settings);
+        _database = client.GetDatabase(databaseName);
+
+        }
 
     }
+
 }
