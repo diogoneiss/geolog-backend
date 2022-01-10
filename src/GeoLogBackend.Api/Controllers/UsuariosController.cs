@@ -35,7 +35,7 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
         [HttpPatch("/alterarSenha/{usuario}")]
         public async Task<ActionResult> AtualizarSenha([FromBody] string usuario)
         {
-            await _usuarioRepository.AlterarSenha(usuario);
+            await _usuarioRepository.alterarSenha(usuario);
 
             return Ok();
         }
