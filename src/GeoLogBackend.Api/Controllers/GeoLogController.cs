@@ -5,6 +5,7 @@ using GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos;
 using GeoLogBackend.GeoLogBackend.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeoLogBackend.Api.Controllers
@@ -51,6 +52,13 @@ namespace GeoLogBackend.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            //Se não encontrar dados para o país, basta retornar o array vazio
+            if (!resultado.Any())
+            {
+                return Ok(resultado);
+            }
+
 
             Pais primeiro = resultado[new Random().Next(resultado.Count)];
 

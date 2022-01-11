@@ -17,7 +17,8 @@ namespace GeoLogBackend.GeoLogBackend.Dominio.Entidades
             Nome = original.Nome.Abreviado;
             IdSequencial = original.IdSequencial;
             Area = $"{original.Area.Total}{original.Area.Unidade.Simbolo}";
-            Localizacao = original.Localizacao.Regiao.Nome;
+            Localizacao = original.Localizacao;
+
             Governo = original.Governo.Capital.Nome;
             Historico = original.Historico;
             this.Id = original.Id;
@@ -36,7 +37,7 @@ namespace GeoLogBackend.GeoLogBackend.Dominio.Entidades
 
         
         public String Area { get; set; }
-        public String Localizacao { get; set; }
+        public Localizacao Localizacao { get; set; }
         public String[] Linguas { get; set; }
 
 
