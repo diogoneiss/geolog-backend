@@ -3,5 +3,6 @@
    public interface IUnitOfWork
     {
         IPaisRepository Paises { get;  }
+        IUsuarioRepository Usuarios { get; }
     }
 }

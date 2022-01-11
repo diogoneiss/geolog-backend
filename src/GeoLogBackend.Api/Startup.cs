@@ -43,6 +43,9 @@ namespace GeoLogBackend.Api
 
             services.ConfigureMongoDb();
 
+            services.AddCors();
+
+
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             services.AddControllers()
@@ -90,6 +93,14 @@ namespace GeoLogBackend.Api
             });
 
             // app.UseHttpsRedirection();
+
+            //TODO: Refatorar para usar o domínio final, com dominio restrito
+            app.UseCors(x => x
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .SetIsOriginAllowed(origin => true) 
+                 .AllowCredentials()
+                );
 
             app.UseRouting();
 

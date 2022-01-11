@@ -11,9 +11,9 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
     {
         IUsuarioRepository _usuarioRepository;
 
-        public UsuariosController(IUsuarioRepository usuarioRepository)
+        public UsuariosController(IUnitOfWork unitOfWork)
         {
-            _usuarioRepository = usuarioRepository;
+            _usuarioRepository = unitOfWork.Usuarios;
         }
 
         [HttpPost]
