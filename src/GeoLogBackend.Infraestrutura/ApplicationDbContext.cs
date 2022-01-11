@@ -6,6 +6,7 @@ namespace GeoLogBackend.GeoLogBackend.Infraestrutura
     public class ApplicationDbContext: DbContext
     {
         public DbSet<Pais> Paises { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
 
 

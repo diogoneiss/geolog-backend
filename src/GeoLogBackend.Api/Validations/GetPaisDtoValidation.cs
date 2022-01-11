@@ -17,7 +17,8 @@ namespace GeoLogBackend.GeoLogBackend.Api.Validations
             RuleFor(p => p.Nome)
             .NotNull()
             .NotEmpty()
-            .MinimumLength(3)
+            .MaximumLength(3)
+            .WithMessage("API so suporta siglas de paises, com no maximo 3 caracteres")
             .Must(p => !p.Any(char.IsDigit))
             .WithMessage("Pais nao deve conter numeros");
             }
