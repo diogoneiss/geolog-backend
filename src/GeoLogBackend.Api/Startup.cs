@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using GeoLogBackend.GeoLogBackend.Api.Configurations;
+using GeoLogBackend.GeoLogBackend.Infraestrutura;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -39,13 +40,16 @@ namespace GeoLogBackend.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //por algum motivo nao funciona?
+           // var secret = Configuration.GetSection("JWT").GetSection("Secret").Value;
+          
             JsonSerializerOptions jsonSerializerOptions = null;
 
             services.ConfigureMongoDb();
 
             services.AddCors();
 
-
+            services.ConfigureSecurity();
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             services.AddControllers()
@@ -72,12 +76,20 @@ namespace GeoLogBackend.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            /* 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
             }
+            */
+            
+           
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
+            
 
             app.UseRequestLocalization(ops =>
             {

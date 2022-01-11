@@ -9,9 +9,9 @@ namespace GeoLogBackend.Dominio
 
         [BsonId]
         [BsonRepresentation(BsonType.String)] 
-        public Guid Id { get; private set; }
+        public Guid Id { get;  set; }
 
-        public DateTime CreatedAt { get; private set; }
+        public DateTime CreatedAt { get;  set; }
 
         protected Entidade()
         {
