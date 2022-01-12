@@ -18,7 +18,7 @@ namespace GeoLogBackend.Dominio
             base.Id = id;
             base.CreatedAt = instante;
             Nome = nome;
-            Senha = Senha;
+            Senha = senhaEmHash;
             _jaHasheado = true;
         }
         private void hashearSenha()
