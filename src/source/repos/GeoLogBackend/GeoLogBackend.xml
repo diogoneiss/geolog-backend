@@ -4,6 +4,34 @@
         <name>GeoLogBackend</name>
     </assembly>
     <members>
+        <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.AutenticacaoController.Autenticar(GeoLogBackend.GeoLogBackend.Dominio.Entidades.LoginRequest)">
+            <summary>
+            Autentica o usuário e retorna o JWT
+            </summary>
+            <param name="loginRequest"></param>
+            <returns>JWT assinado com o email</returns>
+        </member>
+        <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.UsuariosController.GetUsuario(System.String)">
+            <summary>
+            Recupera o usuário que corresponde ao email enviado. Requer autenticação.
+            </summary>
+            <param name="email"></param>
+            <returns>Usuário encontrado</returns>
+        </member>
+        <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.UsuariosController.AtualizarSenha(GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos.UsuarioDto)">
+            <summary>
+            Atualiza a senha do usuário. Requer autenticação e que o JWT corresponda ao usuário que se quer alterar
+            </summary>
+            <param name="usuario"></param>
+            <returns>NoContent caso tudo dê certo.</returns>
+        </member>
+        <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.UsuariosController.PostUsuario(GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos.UsuarioDto)">
+            <summary>
+            Cria um usuário e retorna seu token jwt e dados criados
+            </summary>
+            <param name="usuarioDto"></param>
+            <returns></returns>
+        </member>
         <member name="M:GeoLogBackend.Api.Controllers.GeoLogController.ObterPaisesIBGE(System.String)">
             <summary>
             Recupera um pais dentro da lista do IBGE

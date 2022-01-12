@@ -24,8 +24,15 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             _usuarioRepository = unitOfWork.Usuarios;
         }
 
+        /// <summary>
+        /// Autentica o usuário e retorna o JWT
+        /// </summary>
+        /// <param name="loginRequest"></param>
+        /// <returns>JWT assinado com o email</returns>
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> Autenticar(LoginRequest loginRequest)
         {
 
@@ -59,12 +66,9 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
 
 
 
-            return Ok(new
-            {
-                token,
-                login
-                
-            });
+            return Ok(
+                token
+                );
         }
     }
 }

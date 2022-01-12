@@ -38,8 +38,12 @@ namespace GeoLogBackend.Api.Controllers
         /// </summary>
         /// <param name="pais"></param>
         /// <returns>Pais recuperado</returns>
-       [HttpGet("{pais}")]
-       public async Task<ActionResult<PaisResponseDto>> ObterPaisesIBGE([FromRoute] string pais)
+        [HttpGet("{pais}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+
+
+        public async Task<ActionResult<PaisResponseDto>> ObterPaisesIBGE([FromRoute] string pais)
         {
 
 

@@ -26,8 +26,16 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             _usuarioRepository = unitOfWork.Usuarios;
         }
 
-        // GET: api/Usuario/5
+        /// <summary>
+        /// Recupera o usuário que corresponde ao email enviado. Requer autenticação.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Usuário encontrado</returns>
         [HttpGet("{email}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+
         public async Task<ActionResult<Usuario>> GetUsuario(string email)
         {
             var user = await _usuarioRepository.FindFirst(u => u.Nome == email);
@@ -40,7 +48,17 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// Atualiza a senha do usuário. Requer autenticação e que o JWT corresponda ao usuário que se quer alterar
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns>NoContent caso tudo dê certo.</returns>
         [HttpPatch("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+
+
         public async Task<IActionResult> AtualizarSenha(UsuarioDto usuario)
         {
 
@@ -50,12 +68,22 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             var token = handler.ReadJwtToken(_bearer_token);
             var email = token.Claims.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value;
 
+            //verificar se o usuário existe, nao da pra atualizar um user que nao existe ainda
+
+            bool usuarioExiste = await UsuarioExists(usuario.Nome);
+
+            if (!usuarioExiste)
+            {
+                return NotFound("Usuário com o email informado não existe");
+            }
+
+
             //verificar se o email do jwt bate com o email do usuario
             var buscado = await _usuarioRepository.FindFirst(usuario => usuario.Nome == email );
 
             if(buscado == null)
             {
-                return Unauthorized();
+                return Unauthorized("Usuário autenticado com JWT não corresponde ao usuário a ser atualizado");
             }
 
             Usuario atualizado = new Usuario(buscado.Nome, usuario.Senha);
@@ -67,15 +95,24 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Cria um usuário e retorna seu token jwt e dados criados
+        /// </summary>
+        /// <param name="usuarioDto"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+
         public async Task<ActionResult<Usuario>> PostUsuario(UsuarioDto usuarioDto)
         {
 
             Usuario novoUser = new Usuario(usuarioDto.Nome, usuarioDto.Senha);
 
-            var buscado = await _usuarioRepository.FindFirst(usuario => usuario.Nome == novoUser.Nome);
-            if (buscado != null)
+            var buscado = await UsuarioExists(usuarioDto.Nome);
+            if (buscado == true)
                 ModelState.AddModelError("Login", "Já existe um usuário com este login");
             
             if (ModelState.ErrorCount > 0)
@@ -90,6 +127,11 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
 
       
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+
+
         public async Task<IActionResult> DeleteUsuario(Guid id)
         {
             var user = await _usuarioRepository.FindById(id);
@@ -108,7 +150,14 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
         {
             var user = await _usuarioRepository.FindById(id);
 
-            return user == null;
+            return user != null;
+        }
+
+        private async Task<bool> UsuarioExists(string email)
+        {
+            var user = await _usuarioRepository.FindFirst(u => u.Nome == email);
+
+            return user != null;
         }
     }
 }
