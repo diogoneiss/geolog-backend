@@ -95,7 +95,7 @@ namespace GeoLogBackend.Api
                 app.UseSwaggerAuthorized();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
-            
+            */
 
             app.UseRequestLocalization(ops =>
             {
