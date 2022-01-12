@@ -90,11 +90,15 @@ namespace GeoLogBackend.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-        
+            else
+            {
                 app.UseSwaggerAuthorized();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
+
+            }
+
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
             
 
             app.UseRequestLocalization(ops =>

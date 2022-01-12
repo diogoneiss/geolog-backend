@@ -53,7 +53,7 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns>NoContent caso tudo dê certo.</returns>
-        [HttpPatch("{id}")]
+        [HttpPatch("")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
@@ -69,26 +69,69 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             var email = token.Claims.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value;
 
             //verificar se o usuário existe, nao da pra atualizar um user que nao existe ainda
+            var buscado = await _usuarioRepository.FindFirst(u => u.Nome == usuario.Nome);
 
-            bool usuarioExiste = await UsuarioExists(usuario.Nome);
 
-            if (!usuarioExiste)
+            if (buscado is null)
             {
                 return NotFound("Usuário com o email informado não existe");
             }
 
 
-            //verificar se o email do jwt bate com o email do usuario
-            var buscado = await _usuarioRepository.FindFirst(usuario => usuario.Nome == email );
-
-            if(buscado == null)
+            //verificar se o email do jwt bate com o email do usuario que recuperamos
+            if (buscado.Nome != email )
             {
                 return Unauthorized("Usuário autenticado com JWT não corresponde ao usuário a ser atualizado");
             }
 
             Usuario atualizado = new Usuario(buscado.Nome, usuario.Senha);
-            //re-atualizar o id antigo
+
+            //re-atualizar o id antigo e data de criação, são modificados no construtor
             atualizado.Id = buscado.Id;
+            atualizado.CreatedAt = buscado.CreatedAt;
+
+            await _usuarioRepository.Update(atualizado);
+
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Atualiza a senha do usuário. Não requer autenticação. Desejável receber código de validação
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns>NoContent caso tudo dê certo.</returns>
+        [HttpPatch("esqueciSenha/{codigo}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> EsqueciSenha([FromBody] UsuarioDto usuario, [FromRoute] int codigo )
+        {
+
+
+            //aqui entra a lógica de validação do código.
+            //nao existe pq nao enviamos emails
+
+
+            //verificar se o usuário existe, nao da pra atualizar um user que nao existe ainda
+            var buscado = await _usuarioRepository.FindFirst(u => u.Nome == usuario.Nome);
+
+
+            if (buscado is null)
+            {
+                return NotFound("Usuário com o email informado não existe");
+            }
+
+
+
+            Usuario atualizado = new Usuario(usuario.Nome, usuario.Senha);
+
+            //re-atualizar o id antigo e data de criação, são modificados no construtor
+            atualizado.Id = buscado.Id;
+            atualizado.CreatedAt = buscado.CreatedAt;
+
             await _usuarioRepository.Update(atualizado);
 
 
@@ -126,23 +169,39 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
         }
 
       
+
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
-
-
         public async Task<IActionResult> DeleteUsuario(Guid id)
         {
-            var user = await _usuarioRepository.FindById(id);
 
-            if (user == null)
+            //Filter specific claim    
+            var _bearer_token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(_bearer_token);
+            var email = token.Claims.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value;
+
+            //verificar se o usuário existe, nao da pra atualizar um user que nao existe ainda
+            var buscado = await _usuarioRepository.FindById(id);
+
+
+            if (buscado is null)
             {
-                return NotFound();
+                return NotFound("Usuário com o email informado não existe");
             }
 
 
-            await _usuarioRepository.Remove(user);
+            //verificar se o email do jwt bate com o email do usuario que recuperamos
+            if (buscado.Nome != email)
+            {
+                return Unauthorized("Usuário autenticado com JWT não corresponde ao usuário a ser deletado");
+            }
+
+
+
+            await _usuarioRepository.Remove(buscado);
             return NoContent();
         }
 
