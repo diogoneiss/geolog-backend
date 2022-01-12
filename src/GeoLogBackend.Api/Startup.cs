@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using GeoLogBackend.GeoLogBackend.Api.Configurations;
+using GeoLogBackend.GeoLogBackend.Api.Middlewares;
 using GeoLogBackend.GeoLogBackend.Infraestrutura;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -84,9 +85,13 @@ namespace GeoLogBackend.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
             }
             */
-            
-           
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+            }
+
+        
+                app.UseSwaggerAuthorized();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
             
