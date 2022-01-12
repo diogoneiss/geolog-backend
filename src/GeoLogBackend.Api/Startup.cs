@@ -29,7 +29,7 @@ namespace GeoLogBackend.Api
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(hostEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
-                //como só existe dev, manterei assim por enquanto
+                //como sÃ³ existe dev, manterei assim por enquanto
                 //.AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
                 .AddJsonFile($"appsettings.json", true, true)
 
@@ -59,7 +59,7 @@ namespace GeoLogBackend.Api
                     opts.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
-            //utilizado para adicionar validações do fluent atraves dos
+            //utilizado para adicionar validaÃ§Ãµes do fluent atraves dos
             //assemblies que herdam da classe dele
             services.AddFluentValidation(fv => fv
                 .RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
@@ -69,7 +69,7 @@ namespace GeoLogBackend.Api
             services.ConfigureSwagger();
 
             // requer AutoMapper.Extensions.Microsoft.DependencyInjection
-            // coisa que o auto mapper não te conta no erro kkkk
+            // coisa que o auto mapper nÃ£o te conta no erro kkkk
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.ResolveDependencies();
@@ -77,14 +77,14 @@ namespace GeoLogBackend.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            /* 
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
             }
-            */
+            /*
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -94,7 +94,7 @@ namespace GeoLogBackend.Api
                 app.UseSwaggerAuthorized();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeoLogBackend v1"));
-            
+            */
 
             app.UseRequestLocalization(ops =>
             {
@@ -111,7 +111,7 @@ namespace GeoLogBackend.Api
 
             // app.UseHttpsRedirection();
 
-            //TODO: Refatorar para usar o domínio final, com dominio restrito
+            //TODO: Refatorar para usar o domÃ­nio final, com dominio restrito
             app.UseCors(x => x
                  .AllowAnyMethod()
                  .AllowAnyHeader()
