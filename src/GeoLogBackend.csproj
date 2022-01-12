@@ -5,10 +5,21 @@
     <UserSecretsId>aspnet-GeoLogBackend-38E5F8DF-50B9-476A-9EC1-A396D11794D5</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <Authors>Diogo Neiss, Filipe Martins, Matheus Ibrahim</Authors>
+    <Company>UFMG</Company>
+    <Product>Geolog</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>.\source\repos\GeoLogBackend\GeoLogBackend.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\diogo\source\repos\GeoLogBackend\src\GeoLogBackend.xml</DocumentationFile>
+    <NoWarn>1591;</NoWarn>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\diogo\source\repos\GeoLogBackend\src\GeoLogBackend.xml</DocumentationFile>
+    <NoWarn>1591;</NoWarn>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
