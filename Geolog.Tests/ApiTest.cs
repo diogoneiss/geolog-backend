@@ -31,7 +31,21 @@ namespace GeoLogBackend.Api.Tests
             Assert.Equal(((int)response.StatusCode), StatusCodes.Status404NotFound);
         }
 
+        /*
+        [Fact(DisplayName = "Solicitação de rota inexistente")]
+        [Trait("IntegrationTests", "PostRequest")]
 
+        public async void Enviar_Requisicao_Nao_Autorizada()
+        {
+
+
+            var response = await _testsFixture.Client.GetAsync("/v1/GeoLog/auth");
+
+
+            //eu quero que dê 401, já que nao providenciei auth para essa rota
+            Assert.Equal(((int)response.StatusCode), StatusCodes.Status401Unauthorized);
+        }
+        */
         [Fact(DisplayName = "Teste executado roda sem erros")]
         [Trait("TestSetup", "EmptyAssert")]
         public void Teste_QuandoExecutado_RodaSemErros()
