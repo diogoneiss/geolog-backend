@@ -73,6 +73,45 @@ namespace GeoLogBackend.Api.Controllers
             return Ok(retorno);
         }
 
+        /// <summary>
+        /// Recupera um pais dentro da lista do IBGE
+        /// </summary>
+        /// <param name="pais"></param>
+        /// <returns>Pais recuperado</returns>
+        [HttpPatch("{pais}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+
+
+        public async Task<ActionResult<PaisResponseDto>> ObterPaisesIBGE([FromRoute] string pais, [FromBody] InformacaoPaisDto informacao)
+        {
+
+
+            var paisValidado = new PaisGetDto(pais, ModelState);
+
+            var resultado = await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //Se não encontrar dados para o país, basta retornar o array vazio
+            if (!resultado.Any())
+            {
+                return NotFound(pais);
+            }
+
+            Pais primeiro = resultado[new Random().Next(resultado.Count)];
+
+            primeiro.ValidaAtualizacao(informacao);
+
+            await _paisRepository.Update(primeiro);
+            PaisResponseDto retorno = new PaisResponseDto(primeiro);
+
+            return Ok(retorno);
+        }
+
         /* TODO: Fazer retornar todos
          * revalidar todos no banco mongo (puxar todos da api e, se certo, limpar os do banco e adicionar dnv)
          * Adicinar dados custom novos de pais
