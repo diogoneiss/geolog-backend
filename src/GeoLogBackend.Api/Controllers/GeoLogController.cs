@@ -46,11 +46,11 @@ namespace GeoLogBackend.Api.Controllers
 
         public async Task<ActionResult<PaisResponseDto>> ObterPaisesIBGE([FromRoute] string pais)
         {
-
-
             var paisValidado = new PaisGetDto(pais, ModelState);
 
-            var resultado = await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome);
+            var paisCadastrado = (await _paisRepository.Find(x => x.Nome.Abreviado == pais)).ToList();
+
+            var resultado = paisCadastrado ?? (await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome));
 
             if (!ModelState.IsValid)
             {
@@ -66,7 +66,10 @@ namespace GeoLogBackend.Api.Controllers
 
             Pais primeiro = resultado[new Random().Next(resultado.Count)];
 
-            await _paisRepository.Add(primeiro);
+            if(!paisCadastrado.Any())
+            {
+                await _paisRepository.Add(primeiro);
+            }
 
             PaisResponseDto retorno = new PaisResponseDto(primeiro);
 
@@ -83,13 +86,15 @@ namespace GeoLogBackend.Api.Controllers
         [ProducesResponseType(400)]
 
 
-        public async Task<ActionResult<PaisResponseDto>> ObterPaisesIBGE([FromRoute] string pais, [FromBody] InformacaoPaisDto informacao)
+        public async Task<ActionResult<PaisResponseDto>> CadastrarAtualizacao([FromRoute] string pais, [FromBody] InformacaoPaisDto informacao)
         {
 
 
             var paisValidado = new PaisGetDto(pais, ModelState);
 
-            var resultado = await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome);
+            var paisCadastrado = (await _paisRepository.Find(x => x.Nome.Abreviado == pais)).ToList();
+
+            var resultado = paisCadastrado ?? (await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome));
 
             if (!ModelState.IsValid)
             {
