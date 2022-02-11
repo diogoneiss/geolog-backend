@@ -50,7 +50,7 @@ namespace GeoLogBackend.Api.Controllers
 
             var paisCadastrado = (await _paisRepository.Find(x => x.Nome.Abreviado == pais)).ToList();
 
-            var resultado = paisCadastrado ?? (await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome));
+            var resultado = paisCadastrado.Any() ? paisCadastrado : (await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome));
 
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace GeoLogBackend.Api.Controllers
 
             var paisCadastrado = (await _paisRepository.Find(x => x.Nome.Abreviado == pais)).ToList();
 
-            var resultado = paisCadastrado ?? (await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome));
+            var resultado = paisCadastrado.Any() ? paisCadastrado : (await _ibgeProvider.ObterPaisesIBGE(paisValidado.Nome));
 
             if (!ModelState.IsValid)
             {
