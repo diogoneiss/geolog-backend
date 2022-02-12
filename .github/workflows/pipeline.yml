@@ -14,12 +14,6 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      - name: Instalar dotnet-format
-        run: dotnet tool install -g dotnet-format
-
-      - name: Verificar estilo de código com dotnet-format
-        run: dotnet format --check
-
       - name: Instalar dependências
         run: dotnet restore
 
