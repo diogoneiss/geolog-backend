@@ -1,0 +1,30 @@
+name: .NET pipeline
+
+on: [ push, pull_request ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup do .NET 5
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Instalar dotnet-format
+        run: dotnet tool install -g dotnet-format
+
+      - name: Verificar estilo de código com dotnet-format
+        run: dotnet format --check
+
+      - name: Instalar dependências
+        run: dotnet restore
+
+      - name: Compilar solução
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Executar testes
+        run: dotnet test --no-restore --verbosity normal
