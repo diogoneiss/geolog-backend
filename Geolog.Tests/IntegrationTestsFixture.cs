@@ -42,20 +42,24 @@ namespace GeoLogBackend.Api.Tests
             {
                 builder.ConfigureTestServices(services =>
                 {
-                    services.AddAuthentication("Test")
+                    services.AddAuthentication("Bearer")
                         .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
-                            "Test", options => { });
+                            "Bearer", options => { });
+                    services.AddAuthorization();
                 });
             })
         .CreateClient(new WebApplicationFactoryClientOptions
         {
+            
             //nao quero redirects
             AllowAutoRedirect = false,
+            
         });
 
             //Colocar o padrão de header como Test no Schema
             Client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Test");
+                new AuthenticationHeaderValue("Bearer");
+          
 
         }
 

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Geolog.Tests": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

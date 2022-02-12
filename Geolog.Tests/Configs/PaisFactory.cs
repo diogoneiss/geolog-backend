@@ -31,6 +31,7 @@ namespace GeoLogBackend.Api.Tests
 
             return Task.FromResult(result);
         }
+
     }
     public class PaisFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {

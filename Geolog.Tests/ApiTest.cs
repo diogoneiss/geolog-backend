@@ -29,10 +29,11 @@ namespace GeoLogBackend.Api.Tests
         {
             string endpoint = "/v1/GeoLog/Usuarios/teste";
 
-
+            _testsFixture.Client.DefaultRequestHeaders.Clear();
 
             var response = await _testsFixture.Client.GetAsync(endpoint);
 
+            var dados = response.Content.ReadAsStringAsync();
 
             //eu quero que dê 401, já que nao providenciei um token
             Assert.Equal(StatusCodes.Status401Unauthorized, (int)response.StatusCode);
@@ -51,12 +52,14 @@ namespace GeoLogBackend.Api.Tests
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = await _testsFixture.Client.PostAsync("/v1/GeoLog/auth", httpContent);
 
-            var token = response.Content.ToString();
-            _testsFixture.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test", token);
+            var token = await response.Content.ReadAsStringAsync();
 
-             response = await _testsFixture.Client.GetAsync($"endpoint/{usuariocorreto.Email}");
+            _testsFixture.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+             response = await _testsFixture.Client.GetAsync("/v1/GeoLog/Usuarios/teste");
 
+            
+            var dados = response.Content.ReadAsStringAsync();
             //eu quero que dê 200, já que providenciei um token
             Assert.Equal(StatusCodes.Status200OK, (int)response.StatusCode);
         }
