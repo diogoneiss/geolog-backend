@@ -27,6 +27,7 @@ namespace GeoLogBackend.Api.Tests
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, "Test");
 
+            //SEMPRE vai aprovar o token
             var result = AuthenticateResult.Success(ticket);
 
             return Task.FromResult(result);

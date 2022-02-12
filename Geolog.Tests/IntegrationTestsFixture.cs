@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bogus;
 using Bogus.DataSets;
+using GeoLogBackend.GeoLogBackend.Api.Configurations;
 using GeoLogBackend.GeoLogBackend.Dominio.Entidades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -42,10 +43,13 @@ namespace GeoLogBackend.Api.Tests
             {
                 builder.ConfigureTestServices(services =>
                 {
+                    /* Se desejar mockar as requests, tenho pronto.
+                     
                     services.AddAuthentication("Bearer")
                         .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
                             "Bearer", options => { });
-                    services.AddAuthorization();
+                    */
+                    services.ConfigureSecurity();
                 });
             })
         .CreateClient(new WebApplicationFactoryClientOptions
