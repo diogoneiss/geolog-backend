@@ -10,6 +10,7 @@ namespace GeoLogBackend.GeoLogBackend.Infraestrutura
 
         private IPaisRepository _paisRepository;
         private IUsuarioRepository _usuarioRepository;
+        private ILogRepository _logRepository;
 
         //se o privado for nulo, cria e atribui com construtor
         public IPaisRepository Paises =>
@@ -17,6 +18,9 @@ namespace GeoLogBackend.GeoLogBackend.Infraestrutura
 
         public IUsuarioRepository Usuarios =>
           _usuarioRepository ??= new UsuarioRepository(_database, "users");
+
+        public ILogRepository Alteracoes =>
+         _logRepository ??= new LogRepository(_database, "alteracoes");
 
 
         private readonly IMongoDatabase _database;

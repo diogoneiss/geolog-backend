@@ -1,4 +1,5 @@
 ﻿using GeoLogBackend.Dominio;
+using GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos;
 using System.Threading.Tasks;
 
 namespace GeoLogBackend.GeoLogBackend.Dominio.Interfaces
@@ -7,6 +8,9 @@ namespace GeoLogBackend.GeoLogBackend.Dominio.Interfaces
     {
         public Task<bool> validarLogin(Usuario usuario);
 
-        public Task alterarSenha(string usuario);
+        public Task alterarSenha(Usuario original, UsuarioDto usuario);
+
+        public Task<Usuario> RecuperarUsuario(string nome);
+       
     }
 }

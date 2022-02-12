@@ -17,8 +17,8 @@ namespace GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos
 
         public PaisGetDto(string nome)
         {
-            
-            Nome = nome;
+            var nomeCaps = nome.ToUpper();
+            Nome = nomeCaps;
             
         }
 

@@ -13,14 +13,14 @@
         </member>
         <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.UsuariosController.GetUsuario(System.String)">
             <summary>
-            Recupera o usuário que corresponde ao email enviado. Requer autenticação.
+            [Autenticado] Recupera o usuário que corresponde ao email enviado. Requer autenticação.
             </summary>
             <param name="email"></param>
             <returns>Usuário encontrado</returns>
         </member>
         <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.UsuariosController.AtualizarSenha(GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos.UsuarioDto)">
             <summary>
-            Atualiza a senha do usuário. Requer autenticação e que o JWT corresponda ao usuário que se quer alterar
+            [Autenticado] Atualiza a senha do usuário. Requer autenticação e que o JWT corresponda ao usuário que se quer alterar
             </summary>
             <param name="usuario"></param>
             <returns>NoContent caso tudo dê certo.</returns>
@@ -39,9 +39,55 @@
             <param name="usuarioDto"></param>
             <returns></returns>
         </member>
+        <member name="M:GeoLogBackend.GeoLogBackend.Api.Controllers.UsuariosController.DeleteUsuario(System.Guid)">
+            <summary>
+            [Autenticado] Deleta o usuario que corresponde ao seguinte GUID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="P:GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos.InformacaoPaisDto.Campo">
+            <summary>
+            Campo que deve ser alterado
+            </summary>
+        </member>
+        <member name="P:GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos.InformacaoPaisDto.Valor">
+            <summary>
+            Novo valor do campo
+            </summary>
+        </member>
+        <member name="M:GeoLogBackend.Api.Controllers.GeoLogController.ObterTodosPaisesIBGE">
+            <summary>
+            Recupera todos os paises dentro da lista do IBGE
+            </summary>
+            <param name="pais"></param>
+            <returns>Pais recuperado</returns>
+        </member>
         <member name="M:GeoLogBackend.Api.Controllers.GeoLogController.ObterPaisesIBGE(System.String)">
             <summary>
             Recupera um pais dentro da lista do IBGE
+            </summary>
+            <param name="pais"></param>
+            <returns>Pais recuperado</returns>
+        </member>
+        <member name="M:GeoLogBackend.Api.Controllers.GeoLogController.CadastrarAtualizacao(System.String,GeoLogBackend.GeoLogBackend.Dominio.Entidades.Dtos.InformacaoPaisDto)">
+            <summary>
+            [Autenticado] Modifica um pais dentro da lista do IBGE
+            </summary>
+            <param name="pais"></param>
+            <param name="informacao"></param>
+            <returns>Pais recuperado</returns>
+        </member>
+        <member name="M:AlteracoesController.AlteracoesPorPais(System.String)">
+            <summary>
+            Recupera todas as alteracoes de um pais
+            </summary>
+            <param name="pais"></param>
+            <returns>Alteracoes recuperadas</returns>
+        </member>
+        <member name="M:AlteracoesController.AlteracoesPorUsuario(System.String)">
+            <summary>
+            Recupera as alteracoes que um usuario fez
             </summary>
             <param name="pais"></param>
             <returns>Pais recuperado</returns>

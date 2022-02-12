@@ -4,5 +4,7 @@
     {
         IPaisRepository Paises { get;  }
         IUsuarioRepository Usuarios { get; }
+
+        ILogRepository Alteracoes { get; }
     }
 }
