@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace GeoLogBackend.GeoLogBackend.Api.Controllers
 {
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes ="Bearer")]
     [Route("v1/GeoLog/Usuarios")]
     public class UsuariosController : ControllerBase
     {
