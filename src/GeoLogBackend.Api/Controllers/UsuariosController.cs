@@ -27,7 +27,7 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
         }
 
         /// <summary>
-        /// Recupera o usuário que corresponde ao email enviado. Requer autenticação.
+        /// [Autenticado] Recupera o usuário que corresponde ao email enviado. Requer autenticação.
         /// </summary>
         /// <param name="email"></param>
         /// <returns>Usuário encontrado</returns>
@@ -49,7 +49,7 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
         }
 
         /// <summary>
-        /// Atualiza a senha do usuário. Requer autenticação e que o JWT corresponda ao usuário que se quer alterar
+        /// [Autenticado] Atualiza a senha do usuário. Requer autenticação e que o JWT corresponda ao usuário que se quer alterar
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns>NoContent caso tudo dê certo.</returns>
@@ -84,14 +84,14 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
                 return Unauthorized("Usuário autenticado com JWT não corresponde ao usuário a ser atualizado");
             }
 
-            Usuario atualizado = new Usuario(buscado.Nome, usuario.Senha);
-
-            //re-atualizar o id antigo e data de criação, são modificados no construtor
-            atualizado.Id = buscado.Id;
-            atualizado.CreatedAt = buscado.CreatedAt;
-
-            await _usuarioRepository.Update(atualizado);
-
+            try
+            {
+                await _usuarioRepository.alterarSenha(buscado, usuario);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
             return NoContent();
         }
@@ -168,8 +168,13 @@ namespace GeoLogBackend.GeoLogBackend.Api.Controllers
             return CreatedAtAction("GetUsuario", new { email = novoUser.Nome }, new { token, novoUser });
         }
 
-      
 
+
+        /// <summary>
+        /// [Autenticado] Deleta o usuario que corresponde ao seguinte GUID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
