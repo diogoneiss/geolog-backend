@@ -92,8 +92,41 @@ namespace GeoLogBackend.Api.Tests
             Assert.Equal(StatusCodes.Status401Unauthorized, (int)response.StatusCode);
 
         }
+  
+        [Fact(DisplayName = "Solicitação de modificação de país com token e campo invalido")]
+        [Trait("IntegrationTests", "Pais")]
+
+        public async void Modificacao_de_dados_do_pais_em_camopo_errado()
+        {
+            string endpoint = "/v1/GeoLog/Paises/";
+
+            //Arrange
+            LoginRequest usuariocorreto = new LoginRequest("teste", "teste");
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(usuariocorreto), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await _testsFixture.Client.PostAsync("/v1/GeoLog/auth", httpContent);
+
+            var token = await response.Content.ReadAsStringAsync();
+
+            _testsFixture.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
+            //Act
+            string campo = "nao_existe";
+            string valor = "teste de integração";
+            var payload = new { campo, valor };
+
+            httpContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+
+            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/br", httpContent);
+
+            //Assert
+            Assert.Equal(400, (int)response.StatusCode);
+
+        }
+            
         [Fact(DisplayName = "Solicitação de modificação de país com token e pais inválido")]
         [Trait("IntegrationTests", "Pais")]
 
