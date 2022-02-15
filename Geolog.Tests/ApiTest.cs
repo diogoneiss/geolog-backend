@@ -1,3 +1,4 @@
+using GeoLogBackend.Dominio;
 using GeoLogBackend.GeoLogBackend.Dominio.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -63,6 +64,107 @@ namespace GeoLogBackend.Api.Tests
             //eu quero que dê 200, já que providenciei um token
             Assert.Equal(StatusCodes.Status200OK, (int)response.StatusCode);
         }
+
+
+        [Fact(DisplayName = "Solicitação de modificação de país com token inválido")]
+        [Trait("IntegrationTests", "Pais")]
+
+        public async void Modificacao_de_dados_do_pais_sem_permissao()
+        {
+            string endpoint = "/v1/GeoLog/Paises/";
+
+            //Arrange
+            _testsFixture.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalido");
+
+
+            //Act
+            string campo = "Nome";
+            string valor = "teste de integração";
+            var payload = new { campo, valor };
+
+            var httpContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+
+            var response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/aaa", httpContent);
+
+            //Assert
+            Assert.Equal(StatusCodes.Status401Unauthorized, (int)response.StatusCode);
+
+        }
+
+
+        [Fact(DisplayName = "Solicitação de modificação de país com token e pais inválido")]
+        [Trait("IntegrationTests", "Pais")]
+
+        public async void Modificacao_de_dados_do_pais_inexistente()
+        {
+            string endpoint = "/v1/GeoLog/Paises/";
+
+            //Arrange
+            LoginRequest usuariocorreto = new LoginRequest("teste", "teste");
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(usuariocorreto), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await _testsFixture.Client.PostAsync("/v1/GeoLog/auth", httpContent);
+
+            var token = await response.Content.ReadAsStringAsync();
+
+            _testsFixture.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+            //Act
+            string campo = "Nome";
+            string valor = "teste de integração";
+            var payload = new { campo, valor };
+
+            httpContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+
+            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/aaa", httpContent);
+
+            //Assert
+            Assert.Equal(StatusCodes.Status404NotFound, (int)response.StatusCode);
+
+        }
+        [Fact(DisplayName = "Solicitação de modificação de país com token e pais válido")]
+        [Trait("IntegrationTests", "Pais")]
+
+        public async void Modificacao_de_dados_do_pais()
+        {
+            string endpoint = "/v1/GeoLog/Paises/";
+
+            //Arrange
+            LoginRequest usuariocorreto = new LoginRequest("teste", "teste");
+            HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(usuariocorreto), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await _testsFixture.Client.PostAsync("/v1/GeoLog/auth", httpContent);
+
+            var token = await response.Content.ReadAsStringAsync();
+
+            _testsFixture.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+            //Act
+            string campo = "Nome";
+            string valor = "teste de integração";
+            var payload = new {campo, valor};
+
+            httpContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+
+            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/br", httpContent);
+            var dados = await response.Content.ReadAsAsync<PaisResponseDto>();
+
+            //Assert
+            Assert.Equal(StatusCodes.Status200OK, (int)response.StatusCode);
+            Assert.Equal(valor, dados.Nome);
+
+        }
+
+
+
 
         [Fact(DisplayName = "Solicitação de rota inexistente")]
         [Trait("IntegrationTests", "PostRequest")]
