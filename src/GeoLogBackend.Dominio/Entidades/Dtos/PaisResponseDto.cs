@@ -9,6 +9,10 @@ namespace GeoLogBackend.GeoLogBackend.Dominio.Entidades
 {
     public class PaisResponseDto : Entidade
     {
+        public PaisResponseDto()
+        {
+
+        }
 
         public PaisResponseDto(Pais original)
         {
