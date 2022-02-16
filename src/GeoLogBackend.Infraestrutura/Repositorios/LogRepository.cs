@@ -28,7 +28,7 @@ namespace GeoLogBackend.GeoLogBackend.Infraestrutura.Repositorios
 
         public async Task<IEnumerable<LogAlteracao>> AlteracoesUsuario(string nome)
         {
-            var result = await Find(x => x.UsuarioQueModificou.Nome == nome);
+            var result = await Find(x => x.UsuarioQueModificou == nome);
 
             return result;
         }

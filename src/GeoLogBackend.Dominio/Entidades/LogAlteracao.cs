@@ -16,14 +16,14 @@ public class LogAlteracao : Entidade, IAggregateRoot
 
     }
 
-    public LogAlteracao(Usuario usuarioQueModificou, Pais paisModificado, InformacaoPaisDto modificacaoFeita)
+    public LogAlteracao(string usuarioQueModificou, Pais paisModificado, InformacaoPaisDto modificacaoFeita)
     {
         UsuarioQueModificou = usuarioQueModificou;
         PaisModificado = paisModificado;
         ModificacaoFeita = new Modificacao(modificacaoFeita);
     }
 
-    public Usuario UsuarioQueModificou { get; set; }
+    public string UsuarioQueModificou { get; set; }
     public Pais PaisModificado { get; set; }
 
     public Modificacao ModificacaoFeita { get; set; }

@@ -20,10 +20,10 @@ namespace GeoLogBackend.GeoLogBackend.Dominio.Entidades
             Linguas = original.Linguas.Select(x => x.Nome).ToArray();
             Nome = original.Nome.Abreviado;
             IdSequencial = original.IdSequencial;
-            Area = $"{original.Area.Total}{original.Area.Unidade.Simbolo}";
+            Area = $"{original?.Area.Total}{original?.Area?.Unidade?.Simbolo}";
             Localizacao = original.Localizacao;
 
-            Governo = original.Governo.Capital.Nome;
+            Governo = original?.Governo?.Capital?.Nome;
             Historico = original.Historico;
             this.Id = original.Id;
             this.CreatedAt = original.CreatedAt;

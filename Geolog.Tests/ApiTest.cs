@@ -121,10 +121,10 @@ namespace GeoLogBackend.Api.Tests
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
 
-            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/aaa", httpContent);
+            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/aaaa", httpContent);
 
             //Assert
-            Assert.Equal(StatusCodes.Status404NotFound, (int)response.StatusCode);
+            Assert.Equal(StatusCodes.Status400BadRequest, (int)response.StatusCode);
 
         }
         [Fact(DisplayName = "Solicitação de modificação de país com token e pais válido")]
@@ -153,8 +153,8 @@ namespace GeoLogBackend.Api.Tests
             httpContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8);
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-
-            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/br", httpContent);
+            //pais nao incluso nos testes, posso livremente modificar nos testes de integrção
+            response = await _testsFixture.Client.PatchAsync("/v1/GeoLog/Paises/aaa", httpContent);
             var dados = await response.Content.ReadAsAsync<PaisResponseDto>();
 
             //Assert
