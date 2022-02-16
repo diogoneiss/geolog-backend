@@ -17,7 +17,7 @@ namespace GeoLogBackend.GeoLogBackend.Api.Configurations
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Modalmais.ContaCorrente.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GeologBackend", Version = "v1" });
                 c.ExampleFilters();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
