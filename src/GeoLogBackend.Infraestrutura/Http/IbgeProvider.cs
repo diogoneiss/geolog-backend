@@ -24,6 +24,12 @@ namespace GeoLogBackend.Infraestrutura.Http
             {
                 var paisesDto = await response.Content.ReadAsAsync<List<Pais>>();
 
+                //Se nao vazio e inexistente, criar vazio
+                if(paises != "" && !paisesDto.Exists(x => x.IdSequencial.ISO31661_ALPHA2 == paises))
+                {
+                    paisesDto = new List<Pais>();
+                    paisesDto.Add(new Pais(paises));
+                }
                 cliente.Dispose();
                 return paisesDto;
             }

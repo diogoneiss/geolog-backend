@@ -205,7 +205,7 @@ namespace GeoLogBackend.Api.Controllers
             {
                 resultado.ValidaAtualizacao(informacao);
             }
-            catch(Exception e)
+            catch(ArgumentOutOfRangeException e)
             {
                 return BadRequest(e.Message);
             }
@@ -219,7 +219,7 @@ namespace GeoLogBackend.Api.Controllers
                 return BadRequest($"Token para usuario {email} invalido, voce nao existe no banco de usuarios mais.");
             }
 
-            var alteracao = new LogAlteracao(Usuario, resultado, informacao);
+            var alteracao = new LogAlteracao(email, resultado, informacao);
 
             await _alteracoesRepository.Add(alteracao);
             await _paisRepository.Update(resultado);
